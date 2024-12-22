@@ -1,0 +1,227 @@
+# Create Data Base and Tables
+
+create database aums_fall_data;
+
+use aums_fall_data;
+create table if not exists players( 
+
+player_id int primary key, 
+player_fname nvarchar(50), 
+player_lname nvarchar(50), 
+player_class nvarchar(50), 
+player_first_poss nvarchar(50), 
+player_second_poss nvarchar(50) 
+
+); 
+
+use aums_fall_data;
+INSERT INTO players (player_id, player_fname, player_lname, player_class, player_first_poss, player_second_poss) 
+VALUES
+    (0, 'Zach', 'Harrison', 'Sophmore', 'Goalkeeper', NULL),
+    (1, 'Ty', 'Bowden', 'Senior', 'Goalkeeper', NULL),
+    (2, 'Sirlem', 'Thullah', 'Senior', 'Defender', 'Midfielder'),
+    (3, 'Hugo', 'Dunger', 'Freshman', 'Defender', 'Midfielder'),
+    (4, 'Magnus', 'Jensen', 'Junior', 'Defender', NULL),
+    (5, 'Roland', 'Ntow', 'Junior', 'Midfielder', NULL),
+    (6, 'Oliver', 'Lovell', 'Senior', 'Midfielder', NULL),
+    (7, 'Pedro', 'Faria', 'Senior', 'Forward', NULL),
+    (8, 'Andre', 'Dutra', 'Senior', 'Midfielder', NULL),
+    (9, NULL, NULL, NULL, NULL, NULL),
+    (10, 'Rodri', 'Fernandez', 'Senior', 'Forward', NULL),
+    (11, 'Oliver', 'Whaley', 'Graduate', 'Midfielder', NULL),
+    (12, 'Riki', 'Soto', 'Senior', 'Midfielder', NULL),
+    (13, NULL, NULL, NULL, NULL, NULL),
+    (14, 'Abdul', 'Kawa', 'Junior', 'Defender', 'Midfielder'),
+    (15, NULL, NULL, NULL, NULL, NULL),
+    (16, 'Teddy', 'Togliatti', 'Senior', 'Midfielder', NULL),
+    (17, 'Ethan', 'Fry', 'Sophmore', 'Midfielder', NULL),
+    (18, 'Alex', 'James', 'Senior', 'Forward', NULL),
+    (19, 'Evans', 'Armah', 'Senior', 'Midfielder', NULL),
+    (20, 'Rodri', 'Jimenes', 'Graduate', 'Midfielder', 'Forward'),
+    (21, 'Sergio', 'Rusi', 'Sophmore', 'Midfielder', 'Forward'),
+    (22, 'Joao', 'Cardoso', 'Graduate', 'Defender', NULL),
+    (23, 'Marley', 'Marshall', 'Freshman', 'Defender', 'Midfielder'),
+    (24, 'Grant', 'Koplinski', 'Junior', 'Midfielder', NULL),
+    (25, 'Braden', 'Fodor', 'Freshman', 'Defender', 'Midfielder'),
+    (26, 'Flynn', 'Tonn', 'Junior', 'Defender', NULL),
+    (27, 'Lewis', 'Hill', 'Freshman', 'Midfielder', NULL),
+    (28, 'Alex', 'Ocampo', 'Junior', 'Midfielder', NULL),
+    (29, 'Miguel', 'Abarca', 'Freshman', 'Defender', NULL),
+    (30, 'Enoch', 'Oye', 'Sophmore', 'Defender', NULL),
+    (31, 'Soshi', 'Tanaka', 'Junior', 'Forward', NULL),
+    (32, 'Toby', 'Forsythe', 'Sophmore', 'Goalkeeper', NULL),
+    (33, 'David', 'Berglund', 'Freshman', 'Goalkeeper', NULL),
+    (34, 'Riley', 'Needles', 'Freshman', 'Midfielder', 'Forward'),
+    (35, 'Yaya', 'Dosso', 'Graduate', 'Forward', NULL),
+    (36, NULL, NULL, NULL, NULL, NULL),
+    (37, 'Gage', 'Ayers', 'Freshman', 'Midfielder', NULL),
+    (38, NULL, NULL, NULL, NULL, NULL),
+    (39, NULL, NULL, NULL, NULL, NULL),
+    (40, 'Jacob', 'Myres', 'Junior', 'Midfielder', 'Forward'),
+    (42, 'Judah', 'Nelson', 'Junior', 'Forward', NULL),
+    (43, 'Carson', 'Lavengood', 'Junior', 'Defender', 'Midfielder'),
+    (44, 'Janam', 'Gurung', 'Freshman', 'Midfielder', NULL),
+    (45, 'Lewis', 'Warner', 'Freshman', 'Midfielder', 'Forward');
+
+
+use aums_fall_data;
+create table data_stats_training( 
+id int not null auto_increment primary key,
+stat_id int, 
+player_id int,
+total_distance nvarchar(50), 
+work_rate nvarchar(50), 
+hard_running nvarchar(50), 
+hard_running_efforts nvarchar(50), 
+sprinting nvarchar(50),
+sprinting_efforts nvarchar(50),
+top_speed nvarchar(50),
+training_session date, 
+season nvarchar(50) 
+
+); 
+
+
+use aums_fall_data;
+create table if not exists data_stats_game_first_team( 
+id int not null auto_increment primary key,
+game_id int, 
+player_id int,
+total_distance nvarchar(50), 
+work_rate nvarchar(50), 
+hard_running nvarchar(50), 
+hard_running_efforts nvarchar(50), 
+sprinting nvarchar(50),
+sprinting_efforts nvarchar(50),
+top_speed nvarchar(50),
+game_session date, 
+season nvarchar(50) 
+
+); 
+
+use aums_fall_data;
+create table if not exists data_stats_game_second_team( 
+id int not null auto_increment primary key,
+game_id int, 
+player_id int,
+total_distance nvarchar(50), 
+work_rate nvarchar(50), 
+hard_running nvarchar(50), 
+hard_running_efforts nvarchar(50), 
+sprinting nvarchar(50),
+sprinting_efforts nvarchar(50),
+top_speed nvarchar(50),
+game_session date, 
+season nvarchar(50) 
+
+); 
+
+# Joins
+
+select players.player_id, players.player_lname,players.player_first_poss,data_stats_training.stat_id,data_stats_game_first_team.game_id
+from players
+left join data_stats_training on data_stats_training.player_id = players.player_id
+left join data_stats_game_first_team on data_stats_game_first_team.player_id = players.player_id
+inner join data_stats_game_second_team on data_stats_game_second_team.player_id = players.player_id;
+
+# Count
+
+SELECT player_class, COUNT(player_id) AS player_count
+FROM players
+GROUP BY player_class
+LIMIT 0, 1000;
+
+SELECT player_first_poss, player_second_poss, COUNT(player_id) AS player_count
+FROM players
+GROUP BY player_first_poss, player_second_poss
+LIMIT 0, 1000;
+
+# AVG
+
+SELECT stat_id, 
+AVG(total_distance) AS avg_total_distance,  
+AVG(work_rate) AS avg_work_rate,  
+AVG(hard_running) AS avg_hard_running,  
+AVG(hard_running_efforts) AS avg_hard_running_efforts, 
+AVG(sprinting) AS avg_sprinting, 
+AVG(sprinting_efforts) AS avg_sprinting_efforts, 
+AVG(top_speed) AS avg_top_speed
+FROM data_stats_training
+where training_session between '2024-09-01' and '2024-09-30'
+GROUP BY stat_id;
+
+SELECT stat_id, 
+AVG(total_distance) AS avg_total_distance,  
+AVG(work_rate) AS avg_work_rate,  
+AVG(hard_running) AS avg_hard_running,  
+AVG(hard_running_efforts) AS avg_hard_running_efforts, 
+AVG(sprinting) AS avg_sprinting, 
+AVG(sprinting_efforts) AS avg_sprinting_efforts, 
+AVG(top_speed) AS avg_top_speed
+FROM data_stats_training
+where training_session between '2024-10-01' and '2024-10-31'
+GROUP BY stat_id;
+
+SELECT game_id, 
+AVG(total_distance) AS avg_total_distance,  
+AVG(work_rate) AS avg_work_rate,  
+AVG(hard_running) AS avg_hard_running,  
+AVG(hard_running_efforts) AS avg_hard_running_efforts, 
+AVG(sprinting) AS avg_sprinting, 
+AVG(sprinting_efforts) AS avg_sprinting_efforts, 
+AVG(top_speed) AS avg_top_speed
+FROM data_stats_game_first_team
+where game_session between '2024-09-01' and '2024-09-30'
+GROUP BY game_id;
+
+SELECT game_id, 
+AVG(total_distance) AS avg_total_distance,  
+AVG(work_rate) AS avg_work_rate,  
+AVG(hard_running) AS avg_hard_running,  
+AVG(hard_running_efforts) AS avg_hard_running_efforts, 
+AVG(sprinting) AS avg_sprinting, 
+AVG(sprinting_efforts) AS avg_sprinting_efforts, 
+AVG(top_speed) AS avg_top_speed
+FROM data_stats_game_first_team
+where game_session between '2024-10-01' and '2024-10-31'
+GROUP BY game_id;
+
+SELECT game_id, 
+AVG(total_distance) AS avg_total_distance,  
+AVG(work_rate) AS avg_work_rate,  
+AVG(hard_running) AS avg_hard_running,  
+AVG(hard_running_efforts) AS avg_hard_running_efforts, 
+AVG(sprinting) AS avg_sprinting, 
+AVG(sprinting_efforts) AS avg_sprinting_efforts, 
+AVG(top_speed) AS avg_top_speed
+FROM data_stats_game_second_team
+where game_session between '2024-09-09' and '2024-09-22'
+GROUP BY game_id;
+
+SELECT game_id, 
+AVG(total_distance) AS avg_total_distance,  
+AVG(work_rate) AS avg_work_rate,  
+AVG(hard_running) AS avg_hard_running,  
+AVG(hard_running_efforts) AS avg_hard_running_efforts, 
+AVG(sprinting) AS avg_sprinting, 
+AVG(sprinting_efforts) AS avg_sprinting_efforts, 
+AVG(top_speed) AS avg_top_speed
+FROM data_stats_game_second_team
+where game_session between '2024-10-01' and '2024-10-31'
+GROUP BY game_id;
+
+SELECT stat_id, 
+AVG(CASE WHEN training_session BETWEEN '2024-09-01' AND '2024-09-30' THEN total_distance END) AS avg_total_distance_sept,
+AVG(CASE WHEN training_session BETWEEN '2024-10-01' AND '2024-10-31' THEN total_distance END) AS avg_total_distance_oct
+FROM data_stats_training
+GROUP BY stat_id;
+    
+SELECT game_id, 
+AVG(total_distance) AS avg_total_distance
+FROM data_stats_game_first_team
+GROUP BY game_id;
+
+SELECT game_id, 
+AVG(total_distance) AS avg_total_distance
+FROM data_stats_game_second_team
+GROUP BY game_id;
